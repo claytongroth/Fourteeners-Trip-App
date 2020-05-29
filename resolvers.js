@@ -11,19 +11,19 @@ const createToken = (user, secret, expiresIn) => {
 exports.resolvers = {
 
     Query: {
-        getAllRecipes: async (root, args, { Recipe }) => {
-            const allRecipes = await Recipe.find().sort({
+        getAllTrips: async (root, args, { Trip }) => {
+            const allTrips = await Trip.find().sort({
                 createdDate: "desc"
             });
-            return allRecipes;    
+            return allTrips;    
         },
-        getRecipe: async (root, {_id}, {Recipe}) => {
-            const recipe = await Recipe.findOne({_id});
-            return recipe;
+        getTrip: async (root, {_id}, {Trip}) => {
+            const trip = await Trip.findOne({_id});
+            return trip;
         },
-        searchRecipes: async (root,{searchTerm}, {Recipe}) => {
+        searchTrips: async (root,{searchTerm}, {Trip}) => {
             if (searchTerm){
-                const searchResults = await Recipe.find({
+                const searchResults = await Trip.find({
                     $text: { $search: searchTerm }
                 }, { 
                     score: { $meta: "textScore"}
@@ -32,16 +32,16 @@ exports.resolvers = {
                 });
                 return searchResults;
             } else {
-                const recipes = await Recipe.find().sort({ likes: 'desc', createdDate: 'desc'});
-                return recipes;
+                const trips = await Trip.find().sort({ likes: 'desc', createdDate: 'desc'});
+                return trips;
             }
             
         },
-        getUserRecipes: async (root, {username}, {Recipe}) =>{
-            const userRecipes = await Recipe.find({username}).sort({
+        getUserTrips: async (root, {username}, {Trip}) =>{
+            const userTrips = await Trip.find({username}).sort({
                 createdDate: 'desc'
             });
-            return userRecipes
+            return userTrips
         },
         getCurrentUser: async (root, args, {currentUser, User}) => {
             if(!currentUser){
@@ -50,15 +50,15 @@ exports.resolvers = {
             const user = await User.findOne({ username: currentUser.username})
             .populate({
                 path: 'favorites',
-                model: 'Recipe'
+                model: 'Trip'
             });
             return user;
         }
     },
     Mutation: {
-        addRecipe: async (root, {name, description, category, instructions, username, lat, lon}, {Recipe} ) => {
+        addTrip: async (root, {name, description, category, instructions, username, lat, lon}, {Trip} ) => {
             console.log(lat, lon, username)
-            const newRecipe = await new Recipe({
+            const newTrip = await new Trip({
                 name,
                 description,
                 category,
@@ -67,7 +67,7 @@ exports.resolvers = {
                 lat,
                 lon
             }).save();
-            return newRecipe;
+            return newTrip;
         },
         signInUser: async (root, {username, password}, {User}) => {
             const user = await User.findOne({username});
@@ -92,23 +92,23 @@ exports.resolvers = {
             }).save();
             return { token: createToken(newUser, process.env.SECRET, '1hr')}
         },
-        likeRecipe: async (root, {_id, username}, {Recipe, User})=>{
-            const recipe = await Recipe.findOneAndUpdate({ _id}, {$inc: {likes: 1}});
+        likeTrip: async (root, {_id, username}, {Trip, User})=>{
+            const trip = await Trip.findOneAndUpdate({ _id}, {$inc: {likes: 1}});
             const user = await User.findOneAndUpdate({username}, {$addToSet: {
                 favorites: _id
             }});
-            return recipe;
+            return trip;
         },
-        unlikeRecipe: async (root, {_id, username}, {Recipe, User})=>{
-            const recipe = await Recipe.findOneAndUpdate({ _id}, {$inc: {likes: -1}});
+        unlikeTrip: async (root, {_id, username}, {Trip, User})=>{
+            const trip = await Trip.findOneAndUpdate({ _id}, {$inc: {likes: -1}});
             const user = await User.findOneAndUpdate({username}, {$pull: {
                 favorites: _id
             }});
-            return recipe;
+            return trip;
         },
-        deleteUserRecipe: async (root, {_id}, {Recipe}) => {
-            const recipe = await Recipe.findOneAndRemove({_id});
-            return recipe;
+        deleteUserTrip: async (root, {_id}, {Trip}) => {
+            const trip = await Trip.findOneAndRemove({_id});
+            return trip;
         }
     }
 

@@ -1,57 +1,57 @@
 import React from 'react';
 import { Query, Mutation } from 'react-apollo';
-import {GET_USER_RECIPES, GET_ALL_RECIPES, DELETE_USER_RECIPE, GET_CURRENT_USER} from '../../queries';
+import {GET_USER_TRIPS, GET_ALL_TRIPS, DELETE_USER_TRIP, GET_CURRENT_USER} from '../../queries';
 import { Link } from 'react-router-dom';
 
-const handleDelete = deleteUserRecipe => {
+const handleDelete = deleteUserTrip => {
     const confirmDelete = window.confirm("Sure you want to delete?");
     if (confirmDelete){
-        deleteUserRecipe().then(({data})=>{
+        deleteUserTrip().then(({data})=>{
             console.log(data);
         })
     }
 }
 
-const UserRecipes = ({username}) =>(
-    <Query query={GET_USER_RECIPES} variables={{username}}>
+const UserTrips = ({username}) =>(
+    <Query query={GET_USER_TRIPS} variables={{username}}>
         {({data, loading, error})=>{
             if (loading) return <div>Loading...</div>
             if (error) return <div>Error...</div>
             return (
                 <ul>
                     <h3>Your Trip Reports</h3>
-                    {!data.getUserRecipes.length && <p><strong>You have not added any recipes yet!</strong></p>}
-                    {data.getUserRecipes.map(recipe =>
-                        <li key ={recipe._id}>
-                            <Link to={`/recipes/${recipe._id}`}><p>{recipe.name}</p></Link>
-                            <p style={{marginBottom: "0"}}>Likes: {recipe.likes}</p>
+                    {!data.getUserTrips.length && <p><strong>You have not added any trips yet!</strong></p>}
+                    {data.getUserTrips.map(trip =>
+                        <li key ={trip._id}>
+                            <Link to={`/trips/${trip._id}`}><p>{trip.name}</p></Link>
+                            <p style={{marginBottom: "0"}}>Likes: {trip.likes}</p>
                             <Mutation 
-                                mutation={DELETE_USER_RECIPE} 
-                                variables={{_id: recipe.id}}
+                                mutation={DELETE_USER_TRIP} 
+                                variables={{_id: trip.id}}
                                 refetchQueries ={()=>[
-                                    {query: GET_ALL_RECIPES},
+                                    {query: GET_ALL_TRIPS},
                                     {query: GET_CURRENT_USER}
                                 ]}
-                                update={(cache,{data: {deleteUserRecipe}})=>{
-                                    const {getUserRecipes} = cache.readQuery({
-                                        query: GET_USER_RECIPES,
+                                update={(cache,{data: {deleteUserTrip}})=>{
+                                    const {getUserTrips} = cache.readQuery({
+                                        query: GET_USER_TRIPS,
                                         variables: {username}
                                     })
                                     cache.writeQuery({
-                                        query: GET_USER_RECIPES,
+                                        query: GET_USER_TRIPS,
                                         variables: {username},
                                         data: {
-                                            getUserRecipes: getUserRecipes.filter(
-                                                recipe => recipe._id !== deleteUserRecipe._id
+                                            getUserTrips: getUserTrips.filter(
+                                                trip => trip._id !== deleteUserTrip._id
                                             )
                                         }
                                     })
                                 }}
                             >
-                                {(deleteUserRecipe, attrs={}) =>{
+                                {(deleteUserTrip, attrs={}) =>{
                                     return (
                                         <p  
-                                            onClick={()=> handleDelete(deleteUserRecipe)} 
+                                            onClick={()=> handleDelete(deleteUserTrip)} 
                                             className="delete-button">{attrs.loading? 'deleting record...': 'X'}
                                         
                                         </p>
@@ -67,4 +67,4 @@ const UserRecipes = ({username}) =>(
 );
 
  
-export default UserRecipes;
+export default UserTrips;

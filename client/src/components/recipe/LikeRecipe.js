@@ -1,9 +1,9 @@
 import React from 'react';
 import withSession from '../WithSession';
 import { Mutation } from 'react-apollo';
-import {LIKE_RECIPE, UNLIKE_RECIPE, GET_RECIPE} from '../../queries';
+import {LIKE_TRIP, UNLIKE_TRIP, GET_TRIP} from '../../queries';
 
-class LikeRecipe extends React.Component{
+class LikeTrip extends React.Component{
     state = {
         username: "",
         liked: false
@@ -20,45 +20,45 @@ class LikeRecipe extends React.Component{
             });
         }
     }
-    handleLike = (likeRecipe, unlikeRecipe) =>{
+    handleLike = (likeTrip, unlikeTrip) =>{
         if (this.state.liked) { 
-            likeRecipe().then( async ({data})=>{
+            likeTrip().then( async ({data})=>{
                 //console.log(data);
                 await this.props.refetch;
             })
         } else {
-            unlikeRecipe().then( async ({data})=>{
+            unlikeTrip().then( async ({data})=>{
                 //console.log(data);
                 await this.props.refetch;
             })
         }
     }
-    handleClick = (likeRecipe, unlikeRecipe) => {
+    handleClick = (likeTrip, unlikeTrip) => {
         this.setState(prevState => ({
             liked: !prevState.liked
         }),
-        () => this.handleLike(likeRecipe, unlikeRecipe)
+        () => this.handleLike(likeTrip, unlikeTrip)
         );
     }
-    updateLike = (cache, {data:{likeRecipe}}) => {
+    updateLike = (cache, {data:{likeTrip}}) => {
         const {_id} = this.props;
-        const {getRecipe} = cache.readQuery({query: GET_RECIPE, variables:{_id}});
+        const {getTrip} = cache.readQuery({query: GET_TRIP, variables:{_id}});
         cache.writeQuery({
-            query: GET_RECIPE,
+            query: GET_TRIP,
             variables: {_id},
             data: {
-                getRecipe: {...getRecipe, likes:likeRecipe.likes + 1 }
+                getTrip: {...getTrip, likes:likeTrip.likes + 1 }
             }
         })
     }
-    updateUnlike = (cache, {data:{unlikeRecipe}}) => {
+    updateUnlike = (cache, {data:{unlikeTrip}}) => {
         const {_id} = this.props;
-        const {getRecipe} = cache.readQuery({query: GET_RECIPE, variables:{_id}});
+        const {getTrip} = cache.readQuery({query: GET_TRIP, variables:{_id}});
         cache.writeQuery({
-            query: GET_RECIPE,
+            query: GET_TRIP,
             variables: {_id},
             data: {
-                getRecipe: {...getRecipe, likes:unlikeRecipe.likes - 1 }
+                getTrip: {...getTrip, likes:unlikeTrip.likes - 1 }
             }
         })
     }
@@ -69,18 +69,18 @@ class LikeRecipe extends React.Component{
         console.log(this.props, _id)
         return(
             <Mutation 
-                mutation={UNLIKE_RECIPE} 
+                mutation={UNLIKE_TRIP} 
                 variables={{_id, username}}
                 update={this.updateUnlike}
             >
-                { unlikeRecipe =>(
+                { unlikeTrip =>(
                         <Mutation 
-                            mutation={LIKE_RECIPE} 
+                            mutation={LIKE_TRIP} 
                             variables={{_id, username}}
                             update={this.updateLike}
                         >
-                            {likeRecipe =>{
-                                return username && <button onClick={()=>this.handleClick(likeRecipe, unlikeRecipe)}>
+                            {likeTrip =>{
+                                return username && <button onClick={()=>this.handleClick(likeTrip, unlikeTrip)}>
                                                         {liked ? "Unlike" : "Like"}
                                                     </button>;
                             }}
@@ -94,4 +94,4 @@ class LikeRecipe extends React.Component{
     }
 }
 
-export default withSession(LikeRecipe);
+export default withSession(LikeTrip);

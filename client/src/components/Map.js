@@ -7,7 +7,7 @@ import ReactMapboxGl, { Layer, Feature, GeoJSONLayer, Marker, Popup, ZoomControl
 import {peeks} from '../constants/14ers';
 import axios from 'axios';
 import {Query} from 'react-apollo';
-import {GET_ALL_RECIPES} from '../queries'
+import {GET_ALL_TRIPS} from '../queries'
 
 const Map = ReactMapboxGl({
     accessToken: "pk.eyJ1IjoiY2dyb3RoIiwiYSI6ImNqZ2w4bWY5dTFueG0zM2w0dTNkazI1aWEifQ.55SWFVBYzs08EqJHAa3AsQ"
@@ -149,7 +149,7 @@ class MapPage extends React.Component {
     render(){
         const { campsites, weather, trails, marker, viewport, tripPopup, campPopup, trailPopup, showCamps, showTrails, zoom} = this.state;
         return (
-            <Query query={GET_ALL_RECIPES}>
+            <Query query={GET_ALL_TRIPS}>
             {({data, loading, error})=> {
               if (loading) return <div>Loading...</div>
               if (error) return <div>Error!</div>
@@ -281,7 +281,7 @@ class MapPage extends React.Component {
                             </Popup>
                             }
                             {
-                                data.getAllRecipes.map(x =>
+                                data.getAllTrips.map(x =>
                                 <Marker onClick={()=>this.tripPopUpHandler(x)} coordinates={[x.lon, x.lat]} key={x._id}>
                                     <MyMarker img={pin} />
                                 </Marker>

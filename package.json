@@ -1,5 +1,5 @@
 {
-  "name": "react-recipes",
+  "name": "react-trips",
   "version": "1.0.0",
   "description": "A starter for React-Apollo-GraphQL projects",
   "main": "server.js",

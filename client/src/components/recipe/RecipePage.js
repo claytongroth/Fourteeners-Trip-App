@@ -1,8 +1,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import { Query } from 'react-apollo';
-import { GET_RECIPE } from '../../queries';
-import LikeRecipe from './LikeRecipe';
+import { GET_TRIP } from '../../queries';
+import LikeTrip from './LikeTrip';
 import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import MyMarker from '../markers/marker';
 import pin from '../markers/pin.svg';
@@ -12,30 +12,30 @@ const Map = ReactMapboxGl({
 });
 const zoom = 8;
 
-const RecipePage = ({match}) => {
+const TripPage = ({match}) => {
     const { _id } = match.params;
     return (
-        <Query query={GET_RECIPE} variables={{_id}}>
+        <Query query={GET_TRIP} variables={{_id}}>
             {({data, loading, error})=>{
                 if(loading) return <div>Loading...</div>
                 if (error) return <div>Error</div>
-                console.log(data.getRecipe)
+                console.log(data.getTrip)
                 return (
                     <div className="App">
                     <div className="row">
                         <div className="five columns">
-                            <h2>{data.getRecipe.name}</h2>
-                            <p>Category: {data.getRecipe.category}</p>
-                            <p>Description: {data.getRecipe.description}</p>
-                            <p>Trip Details: {data.getRecipe.instructions}</p>
-                            <p>Likes: {data.getRecipe.likes}</p>
-                            <p>Created by: {data.getRecipe.username}</p>
-                            <p>Lat,Lon: {data.getRecipe.lat}, {data.getRecipe.lon}</p>
-                            <LikeRecipe _id={_id}/>
+                            <h2>{data.getTrip.name}</h2>
+                            <p>Category: {data.getTrip.category}</p>
+                            <p>Description: {data.getTrip.description}</p>
+                            <p>Trip Details: {data.getTrip.instructions}</p>
+                            <p>Likes: {data.getTrip.likes}</p>
+                            <p>Created by: {data.getTrip.username}</p>
+                            <p>Lat,Lon: {data.getTrip.lat}, {data.getTrip.lon}</p>
+                            <LikeTrip _id={_id}/>
                         </div>
                         <div className="five columns">
                             <Map
-                                center={[data.getRecipe.lon,data.getRecipe.lat]} 
+                                center={[data.getTrip.lon,data.getTrip.lat]} 
                                 zoom={[zoom]}
                                 style= "mapbox://styles/mapbox/streets-v9"
                                 containerStyle={{
@@ -43,7 +43,7 @@ const RecipePage = ({match}) => {
                                     width: "400px"
                                 }}
                             >
-                                <Marker coordinates={[data.getRecipe.lon,data.getRecipe.lat]} >
+                                <Marker coordinates={[data.getTrip.lon,data.getTrip.lat]} >
                                     <MyMarker img={pin} />
                                 </Marker>
                             </Map>
@@ -58,4 +58,4 @@ const RecipePage = ({match}) => {
     );
 }
 
-export default withRouter(RecipePage);
+export default withRouter(TripPage);

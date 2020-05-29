@@ -6,13 +6,13 @@ import App from './components/App';
 import NavBar from './components/NavBar';
 import SignIn from './components/auth/Signin';
 import SignUp from './components/auth/Signup';
-import Search from './components/recipe/Search';
-import AddRecipe from './components/recipe/AddRecipe';
+import Search from './components/trip/Search';
+import AddTrip from './components/trip/AddTrip';
 import Profile from './components/profile/Profile';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import withSession from './components/WithSession';
-import RecipePage from './components/recipe/RecipePage';
+import TripPage from './components/trip/TripPage';
 import MapPage from './components/Map';
 
 const client = new ApolloClient({
@@ -45,8 +45,8 @@ const Root = ({ refetch, session }) => (
                 <Route path="/map" component={MapPage}/>
                 <Route path="/signin" render={()=> <SignIn refetch={refetch}/>}/>
                 <Route path="/signup" render={()=> <SignUp refetch={refetch}/>}/>
-                <Route path ="/recipe/add" render={()=> <AddRecipe session={session}/>}/>
-                <Route path = "/recipes/:_id" component={RecipePage} />
+                <Route path ="/trip/add" render={()=> <AddTrip session={session}/>}/>
+                <Route path = "/trips/:_id" component={TripPage} />
                 <Route path ="/profile" render={()=> <Profile session={session}/>}/>
                 <Redirect to="/"/>
             </Switch>

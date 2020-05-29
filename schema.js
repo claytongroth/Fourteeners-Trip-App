@@ -2,7 +2,7 @@
 // In this file we define and export the Types (as graphQL is strongly typed) we need for our GraphQl Schema
 exports.typeDefs = `
 
-type Recipe {
+type Trip {
     _id: ID
     name: String!
     category: String!
@@ -21,15 +21,15 @@ type User {
     password: String!
     email: String!
     joinDate: String
-    favorites: [Recipe]
+    favorites: [Trip]
 }
 
 type Query {
-    getAllRecipes: [Recipe]
-    getRecipe(_id: ID!): Recipe
-    searchRecipes(searchTerm: String): [Recipe]
+    getAllTrips: [Trip]
+    getTrip(_id: ID!): Trip
+    searchTrips(searchTerm: String): [Trip]
     getCurrentUser: User
-    getUserRecipes(username: String!): [Recipe]
+    getUserTrips(username: String!): [Trip]
 }
 
 type Token {
@@ -37,7 +37,7 @@ type Token {
 }
 
 type Mutation{
-    addRecipe(
+    addTrip(
         name: String!,
         category: String!, 
         description: String!, 
@@ -47,10 +47,10 @@ type Mutation{
         username: String,
         lat: Float,
         lon: Float
-    ): Recipe
-    deleteUserRecipe(_id: ID): Recipe
-    likeRecipe(_id: ID!, username: String!): Recipe
-    unlikeRecipe(_id: ID!, username: String!): Recipe
+    ): Trip
+    deleteUserTrip(_id: ID): Trip
+    likeTrip(_id: ID!, username: String!): Trip
+    unlikeTrip(_id: ID!, username: String!): Trip
     signInUser(
         username: String!,
         password: String!

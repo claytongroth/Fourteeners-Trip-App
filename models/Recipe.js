@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const RecipeSchema = new Schema({
+const TripSchema = new Schema({
     name:{
         type: String,
         required: true
@@ -38,8 +38,8 @@ const RecipeSchema = new Schema({
     }
 })
 
-RecipeSchema.index({
+TripSchema.index({
     '$**': 'text'
 });
 
-module.exports = mongoose.model('Recipe', RecipeSchema)
+module.exports = mongoose.model('Trip', TripSchema)

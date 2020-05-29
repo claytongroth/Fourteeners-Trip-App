@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Recipe = require('./models/Recipe');
+const Trip = require('./models/Trip');
 const User = require('./models/User');
 const bodParser = require('body-parser');
 const cors = require('cors');
@@ -56,7 +56,7 @@ app.use(
     graphqlExpress(({currentUser}) => ({
         schema,
         context:{
-            Recipe,
+            Trip,
             User,
             currentUser
         }

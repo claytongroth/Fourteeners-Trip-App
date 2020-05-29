@@ -1,9 +1,9 @@
 import { gql } from 'apollo-boost';
 
-//recipes queries
-export const GET_ALL_RECIPES = gql`
+//trips queries
+export const GET_ALL_TRIPS = gql`
 query {
-    getAllRecipes {
+    getAllTrips {
         _id
         name
         category
@@ -15,9 +15,9 @@ query {
     }
 }
 `;
-export const GET_RECIPE = gql`
+export const GET_TRIP = gql`
   query($_id: ID!) {
-    getRecipe(_id: $_id){
+    getTrip(_id: $_id){
       _id
       name
       category
@@ -32,9 +32,9 @@ export const GET_RECIPE = gql`
   }
 `;
 
-export const SEARCH_RECIPES = gql`
+export const SEARCH_TRIPS = gql`
   query($searchTerm: String){
-    searchRecipes(searchTerm: $searchTerm){
+    searchTrips(searchTerm: $searchTerm){
       _id
       name
       likes
@@ -42,8 +42,8 @@ export const SEARCH_RECIPES = gql`
   }
 `;
 
-//recipe mutations
-export const ADD_RECIPE = gql`
+//trip mutations
+export const ADD_TRIP = gql`
   mutation(
     $name: String!,
     $category: String!, 
@@ -55,7 +55,7 @@ export const ADD_RECIPE = gql`
     $lat: Float,
     $lon: Float
   ){
-    addRecipe(
+    addTrip(
       name: $name
       description: $description
       category: $category
@@ -82,27 +82,27 @@ export const ADD_RECIPE = gql`
   }
 `;
 
-export const DELETE_USER_RECIPE = gql`
+export const DELETE_USER_TRIP = gql`
   mutation($_id: ID!){
-    deleteUserRecipe(_id: $_id){
+    deleteUserTrip(_id: $_id){
       _id
     }
   }
 
 `;
 
-export const LIKE_RECIPE = gql`
+export const LIKE_TRIP = gql`
   mutation($_id: ID!, $username: String!){
-    likeRecipe(_id: $_id, username: $username){
+    likeTrip(_id: $_id, username: $username){
       _id
       likes
     }
   }
 `;
 
-export const UNLIKE_RECIPE = gql`
+export const UNLIKE_TRIP = gql`
   mutation($_id: ID!, $username: String!){
-    unlikeRecipe(_id: $_id, username: $username){
+    unlikeTrip(_id: $_id, username: $username){
       _id
       likes
     }
@@ -124,9 +124,9 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
-export const GET_USER_RECIPES = gql`
+export const GET_USER_TRIPS = gql`
   query($username: String!){
-    getUserRecipes(username: $username){
+    getUserTrips(username: $username){
       _id
       name
       likes

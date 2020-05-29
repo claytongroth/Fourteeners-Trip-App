@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
-import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
+import { ADD_TRIP, GET_ALL_TRIPS, GET_USER_TRIPS } from '../../queries';
 import Error from '../error';
 import { withRouter } from 'react-router-dom';
 import withAuth from '../WithAuth';
@@ -21,7 +21,7 @@ const initialState = {
     lat: 39.113014,
     lon: -105.358887
 }
-class AddRecipe extends React.Component {
+class AddTrip extends React.Component {
     state = {...initialState};
     clearState = () =>{
         this.setState({...initialState});
@@ -47,9 +47,9 @@ class AddRecipe extends React.Component {
 
     }
     // it is an arrow function in the JSX so that it doesn't execute on page load
-    handleSubmit = (e, addRecipe) => {
+    handleSubmit = (e, addTrip) => {
         e.preventDefault();
-        addRecipe().then(({data})=>{
+        addTrip().then(({data})=>{
             console.log(data);
         })
         this.clearState();
@@ -60,12 +60,12 @@ class AddRecipe extends React.Component {
         const isInvalid = !name || !category || !description || !instructions;
         return isInvalid;
     }
-    updateCache = (cache, {data:{addRecipe} }) => {
-        const {getAllRecipes} = cache.readQuery({query: GET_ALL_RECIPES});
+    updateCache = (cache, {data:{addTrip} }) => {
+        const {getAllTrips} = cache.readQuery({query: GET_ALL_TRIPS});
         cache.writeQuery({
-            query: GET_ALL_RECIPES,
+            query: GET_ALL_TRIPS,
             data: {
-                getAllRecipes: [addRecipe, ...getAllRecipes]
+                getAllTrips: [addTrip, ...getAllTrips]
             }
 
         });
@@ -79,21 +79,21 @@ class AddRecipe extends React.Component {
        console.log(lat, lon)
         return(
             <Mutation 
-                mutation={ADD_RECIPE} 
+                mutation={ADD_TRIP} 
                 variables={{name, category, description, instructions, username, lat, lon}}
                 update={this.updateCache}
                 refetchQueries={()=>[
-                    {query: GET_USER_RECIPES, variables: {username}}
+                    {query: GET_USER_TRIPS, variables: {username}}
                 ]}
             >
-                {(addRecipe, {data, loading, error})=>{
+                {(addTrip, {data, loading, error})=>{
                     console.log(lat, lon)
                     return(
                         <div className="App">
                             <div className="row">
                                 <div className="five columns">
                                     <h2 className="App"> Add Trip Report</h2>
-                                    <form className="form" onSubmit={(e)=>this.handleSubmit(e, addRecipe)}>
+                                    <form className="form" onSubmit={(e)=>this.handleSubmit(e, addTrip)}>
                                         <input value={name} type="text" name="name" onChange={this.handleChange} placeholder = "Trip Name/Title"></input>
                                         <select value={category} name="category" onChange={this.handleChange}>
                                             <option value="Easy">Easy</option>
@@ -160,4 +160,4 @@ class AddRecipe extends React.Component {
     }
 };
 
-export default withAuth(session => session && session.getCurrentUser)(withRouter(AddRecipe));
+export default withAuth(session => session && session.getCurrentUser)(withRouter(AddTrip));
