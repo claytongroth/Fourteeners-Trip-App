@@ -41,7 +41,8 @@ app.use(async (req, res, next) =>{
     console.log("Request here", {req})
     const token = req.headers['authorization'];
     console.log("token before conditional", token)
-    if (token){
+    console.log("Type of token", typeof token)
+    if (token !== "null"){
         try {
             console.log("Secret here", process.env.SECRET)
             console.log("incoming token here", token)
