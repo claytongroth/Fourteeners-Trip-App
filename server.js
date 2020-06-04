@@ -41,7 +41,10 @@ app.use(async (req, res, next) =>{
     const token = req.headers['authorization'];
     if (token !== "null"){
         try {
+            console.log("Secret here", process.env.SECRET)
+            console.log("Awaiting verification...")
             const currentUser = await jwt.verify(token, process.env.SECRET) 
+            console.log("current user verified", {currentUser})
             req.currentUser = currentUser;
         } catch (error) {
             console.log(error)
