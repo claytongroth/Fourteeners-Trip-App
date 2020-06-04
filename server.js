@@ -38,6 +38,7 @@ app.use(cors(corsOptions));
 
 // setup JWT authentication middleware
 app.use(async (req, res, next) =>{
+    console.log("Request here", {req})
     const token = req.headers['authorization'];
     if (token !== "null"){
         try {
