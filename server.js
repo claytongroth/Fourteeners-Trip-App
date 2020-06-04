@@ -40,7 +40,7 @@ app.use(cors(corsOptions));
 app.use(async (req, res, next) =>{
     console.log("Request here", {req})
     const token = req.headers['authorization'];
-    if (token !== "null"){
+    if (token){
         try {
             console.log("Secret here", process.env.SECRET)
             console.log("incoming token here", token)
