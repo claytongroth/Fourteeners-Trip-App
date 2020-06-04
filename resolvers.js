@@ -81,6 +81,7 @@ exports.resolvers = {
             return { token: createToken(user, process.env.SECRET, '1hr')}
         },
         signUpUser : async (root, { username, email, password }, { User }) =>{
+            console.log("signUpUser fired")
             const user = await User.findOne({username});
             if (user){
                 throw new Error("User already exists!")
@@ -90,7 +91,9 @@ exports.resolvers = {
                 email,
                 password
             }).save();
-            return { token: createToken(newUser, process.env.SECRET, '1hr')}
+            const token = createToken(newUser, process.env.SECRET, '1hr')
+            console.log("signUpUser trying to return ", token)
+            return { token }
         },
         likeTrip: async (root, {_id, username}, {Trip, User})=>{
             const trip = await Trip.findOneAndUpdate({ _id}, {$inc: {likes: 1}});
