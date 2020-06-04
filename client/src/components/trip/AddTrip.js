@@ -77,7 +77,6 @@ class AddTrip extends React.Component {
     };
    render(){
        const { name, category, description, instructions, username, lat, lon} = this.state;
-       console.log(lat, lon)
         return(
             <Mutation 
                 mutation={ADD_TRIP} 
@@ -88,7 +87,6 @@ class AddTrip extends React.Component {
                 ]}
             >
                 {(addTrip, {data, loading, error})=>{
-                    console.log(lat, lon)
                     return(
                         <div className="App">
                             <div className="row">

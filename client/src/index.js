@@ -15,8 +15,11 @@ import withSession from './components/WithSession';
 import TripPage from './components/trip/TripPage';
 import MapPage from './components/Map';
 
+//https://react-apollo-trip-reports.herokuapp.com/
+//http://localhost:4444/graphql
+
 const client = new ApolloClient({
-    uri: 'http://localhost:4444/graphql',
+    uri: 'https://react-apollo-trip-reports.herokuapp.com/graphql',
     fetchOptions: {
         credentials: 'include'
     },
