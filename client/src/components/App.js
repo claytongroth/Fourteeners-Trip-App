@@ -7,7 +7,7 @@ import TripItem from './trip/TripItem';
 const App= () => {
   return (
     <div className="App">
-      <h1>Home</h1>
+      <h1>_Home_</h1>
       <Query query={GET_ALL_TRIPS}>
         {({data, loading, error})=> {
           if (loading) return <div>Loading...</div>

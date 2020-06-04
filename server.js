@@ -27,10 +27,13 @@ mongoose
 // Initializes aplication.
 const app = express();
 
+//https://react-apollo-trip-reports.herokuapp.com/graphql
+//http://localhost:3000
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://react-apollo-trip-reports.herokuapp.com',
     credentials: true
 }
+
 app.use(cors(corsOptions));
 
 // setup JWT authentication middleware
@@ -38,8 +41,7 @@ app.use(async (req, res, next) =>{
     const token = req.headers['authorization'];
     if (token !== "null"){
         try {
-            console.log("Secret here: ", process.env.SECRET)
-           const currentUser = await jwt.verify(token, process.env.SECRET) 
+            const currentUser = await jwt.verify(token, process.env.SECRET) 
             req.currentUser = currentUser;
         } catch (error) {
             console.log(error)
