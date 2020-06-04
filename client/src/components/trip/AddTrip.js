@@ -21,6 +21,7 @@ const initialState = {
     lat: 39.113014,
     lon: -105.358887
 }
+
 class AddTrip extends React.Component {
     state = {...initialState};
     clearState = () =>{
