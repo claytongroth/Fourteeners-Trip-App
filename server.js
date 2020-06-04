@@ -49,8 +49,8 @@ app.use(async (req, res, next) =>{
 });
 
 //Connecting our Schemas with GraphQL
-// app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}
-// ))
+app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}
+))
 
 app.use(
     '/graphql', 
