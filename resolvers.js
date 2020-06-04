@@ -12,6 +12,7 @@ exports.resolvers = {
 
     Query: {
         getAllTrips: async (root, args, { Trip }) => {
+            console.log("getAllTrips fired")
             const allTrips = await Trip.find().sort({
                 createdDate: "desc"
             });
@@ -82,7 +83,14 @@ exports.resolvers = {
         },
         signUpUser : async (root, { username, email, password }, { User }) =>{
             console.log("signUpUser fired")
-            const user = await User.findOne({username});
+            let user;
+            try {
+                user = await User.findOne({username});
+
+            } catch (err) {
+                console.log(err)
+                throw new Error(err)
+            }
             if (user){
                 throw new Error("User already exists!")
             }
