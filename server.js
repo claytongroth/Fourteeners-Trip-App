@@ -30,7 +30,7 @@ const app = express();
 //https://react-apollo-trip-reports.herokuapp.com/graphql
 //http://localhost:3000
 const corsOptions = {
-    origin: 'https://react-apollo-trip-reports.herokuapp.com',
+    origin: 'https://react-apollo-trip-reports.herokuapp.com/graphql',
     credentials: true
 }
 
@@ -39,8 +39,6 @@ app.use(cors(corsOptions));
 // setup JWT authentication middleware
 app.use(async (req, res, next) =>{
     const token = req.headers['authorization'];
-    console.log("token before conditional", token)
-    console.log("Type of token", typeof token)
     if (token !== "null"){
         try {
             const currentUser = await jwt.verify(token, process.env.SECRET) 

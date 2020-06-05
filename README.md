@@ -5,3 +5,5 @@ npm install
 cd client && npm install
 
 npm run dev
+
+https://react-apollo-trip-reports.herokuapp.com/map

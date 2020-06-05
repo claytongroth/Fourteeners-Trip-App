@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import withAuth from '../WithAuth';
 import ReactMapboxGl, { Layer, Feature, GeoJSONLayer} from "react-mapbox-gl";
 import {peeks} from '../../constants/14ers';
+import Reticle from '../markers/Reticle';
 
 const Map = ReactMapboxGl({
     accessToken: "pk.eyJ1IjoiY2dyb3RoIiwiYSI6ImNqZ2w4bWY5dTFueG0zM2w0dTNkazI1aWEifQ.55SWFVBYzs08EqJHAa3AsQ"
@@ -19,7 +20,8 @@ const initialState = {
     description:'',
     username: '',
     lat: 39.113014,
-    lon: -105.358887
+    lon: -105.358887,
+    persistentCenter: [-105.358887, 39.113014]
 }
 
 class AddTrip extends React.Component {
@@ -76,7 +78,7 @@ class AddTrip extends React.Component {
         this.setState({lat, lon: lng});
     };
    render(){
-       const { name, category, description, instructions, username, lat, lon} = this.state;
+       const { name, category, description, instructions, username, lat, lon, persistentCenter} = this.state;
         return(
             <Mutation 
                 mutation={ADD_TRIP} 
@@ -110,7 +112,7 @@ class AddTrip extends React.Component {
                                     </div>
                                 <div className="five columns">
                                     <Map
-                                        center={[lon, lat]} 
+                                        center={persistentCenter} 
                                         zoom={[zoom]}
                                         style= "mapbox://styles/mapbox/streets-v9"
                                         containerStyle={{
@@ -118,24 +120,7 @@ class AddTrip extends React.Component {
                                             width: "50vw"
                                         }}
                                     >
-                                        <Layer 
-                                            type="circle" 
-                                            id="marker" 
-                                            paint={{
-                                                'circle-radius': 10,
-                                                'circle-color': "#8B0000",
-                                                'circle-stroke-width': 3,
-                                                'circle-stroke-color': '#8B0000',
-                                                'circle-stroke-opacity': .7
-                                            }}
-                                        >
-                                            <Feature
-                                                draggable = {true}
-                                                onDragEnd={this._onMarkerDragEnd}
-                                                coordinates={[lon, lat] }
-                                            >
-                                            </Feature>
-                                        </Layer>
+                                        <Reticle/>
                                         <GeoJSONLayer
                                             symbolLayout={{
                                                 "icon-image": "mountain-15",

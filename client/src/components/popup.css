@@ -1,0 +1,18 @@
+.main-header {
+    height: 50px;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+.popup-header {
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+}
+
+.pop-text {
+    padding-left: .5rem;
+    background: rgba(211,211,211, .5);
+    border-radius: .25rem;
+}

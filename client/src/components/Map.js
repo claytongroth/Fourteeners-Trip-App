@@ -36,40 +36,38 @@ class MapPage extends React.Component {
         tripPopup: null,
         showCamps: true,
         showTrails: true
-
-
     }
     shouldComponentUpdate(prevState, nextState){
        return prevState.campsites !== nextState.campsites || prevState.trails !== nextState.trails;
     }
     componentDidMount() {
         //71a5463297f3db0c79aa68783a62506d
-        this.getWeather();
+        // this.getWeather();
     }
     componentDidUpdate(){
 
     }
-    getWeather = () => {
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&APPID=71a5463297f3db0c79aa68783a62506d`)
-        .then(res => {
-            const weather = res.data;
-            this.setState({ weather });
-        })
-    }
-    getCampgrounds = () => {
-        axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&maxDistance=50&key=106768918-c3adb5c4075e2803170b529f00384e64`)
-        .then(res => {
-            const campsites = res.data;
-            this.setState({ campsites });
-        })
-    }
-    getTrails = () => {
-        axios.get(`https://www.hikingproject.com/data/get-trails?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&maxDistance=10&key=106768918-c3adb5c4075e2803170b529f00384e64`)
-        .then( res => {
-            const trails = res.data;
-            this.setState({trails});
-        })
-    }
+    // getWeather = () => {
+    //     axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&APPID=71a5463297f3db0c79aa68783a62506d`)
+    //     .then(res => {
+    //         const weather = res.data;
+    //         this.setState({ weather });
+    //     })
+    // }
+    // getCampgrounds = () => {
+    //     axios.get(`https://www.hikingproject.com/data/get-campgrounds?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&maxDistance=50&key=106768918-c3adb5c4075e2803170b529f00384e64`)
+    //     .then(res => {
+    //         const campsites = res.data;
+    //         this.setState({ campsites });
+    //     })
+    // }
+    // getTrails = () => {
+    //     axios.get(`https://www.hikingproject.com/data/get-trails?lat=${this.state.marker.latitude}&lon=${this.state.marker.longitude}&maxDistance=10&key=106768918-c3adb5c4075e2803170b529f00384e64`)
+    //     .then( res => {
+    //         const trails = res.data;
+    //         this.setState({trails});
+    //     })
+    // }
     _updateViewport = viewport => {
         this.setState({viewport});
     };
@@ -139,13 +137,7 @@ class MapPage extends React.Component {
             tripPopup: null
         })
     }
-    // TODO 
-
-    // 
-    // refactor into more modular components
-    // Destructure even further
-    // fix double zoom?
-    // 
+    
     render(){
         const { campsites, weather, trails, marker, viewport, tripPopup, campPopup, trailPopup, showCamps, showTrails, zoom} = this.state;
         return (
@@ -157,16 +149,12 @@ class MapPage extends React.Component {
                 <div className = "App">
                 <div className="row">
                     <div className="four columns" > 
-                        <button onClick={()=>this.getTrails()} >View Trail Data</button>
+                        {/* <button onClick={()=>this.getTrails()} >View Trail Data</button>
                         <br/>
                         <button onClick={()=>this.getCampgrounds()} >View Campsites</button>
                         <br/>
                         <button onClick={()=>this.getCampgrounds()}>View Trip Reports</button>
-                        <br/>
-                        <button 
-                            onClick={()=>this.setState({trails:null, campsites:null})} 
-                            className="button-primary"
-                        >Clear Map</button>
+                        <br/> */}
                         <h4 >Weather</h4>
                         { weather &&
                             <ul style={{marginRight: 10}}>
@@ -176,7 +164,10 @@ class MapPage extends React.Component {
                                 <li><p><strong>Wind Speed:</strong> { weather.wind.speed } MPH</p></li>
                             </ul>
                         }
-                        
+                        <button 
+                            onClick={()=>this.setState({trails:null, campsites:null})} 
+                            className="button-primary"
+                        >Clear Map</button>
 
                     </div>
                     <div className="eight columns"> 

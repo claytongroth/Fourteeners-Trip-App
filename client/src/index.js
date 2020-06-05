@@ -13,13 +13,13 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import withSession from './components/WithSession';
 import TripPage from './components/trip/TripPage';
-import MapPage from './components/Map';
+import ReportsMap from './components/ReportsMap';
 
 //https://react-apollo-trip-reports.herokuapp.com/
 //http://localhost:4444/graphql
 
 const client = new ApolloClient({
-    uri: 'https://react-apollo-trip-reports.herokuapp.com/graphql',
+    uri: 'https://react-apollo-trip-reports.herokuapp.com/',
     fetchOptions: {
         credentials: 'include'
     },
@@ -45,7 +45,7 @@ const Root = ({ refetch, session }) => (
             <Switch>
                 <Route path="/" exact component={App}/>
                 <Route path="/search" exact component={Search}/>
-                <Route path="/map" component={MapPage}/>
+                <Route path="/map" component={ReportsMap}/>
                 <Route path="/signin" render={()=> <SignIn refetch={refetch}/>}/>
                 <Route path="/signup" render={()=> <SignUp refetch={refetch}/>}/>
                 <Route path ="/trip/add" render={()=> <AddTrip session={session}/>}/>
