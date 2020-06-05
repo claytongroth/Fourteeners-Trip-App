@@ -27,10 +27,10 @@ mongoose
 // Initializes aplication.
 const app = express();
 
-//https://react-apollo-trip-reports.herokuapp.com/graphql
+//https://react-apollo-trip-reports.herokuapp.com/
 //http://localhost:3000
 const corsOptions = {
-    origin: 'https://react-apollo-trip-reports.herokuapp.com/graphql',
+    origin: 'https://react-apollo-trip-reports.herokuapp.com/',
     credentials: true
 }
 
